@@ -84,8 +84,8 @@ class ImageController extends Controller
 
         $image = Image::findOrFail($request['id']);
 
-        unlink(storage_path() . '/thumbnail/'.$image->url_path);
-        unlink(storage_path() . '/images/'.$image->url_path);
+        unlink(public_path() . '/thumbnail/'.$image->url_path);
+        unlink(public_path() . '/images/'.$image->url_path);
 
         $image->delete();
 
