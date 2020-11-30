@@ -279,7 +279,7 @@ class OfferController extends Controller
 
                  Cloudder::upload($file, "normal/".$unique);
                 $newImage = myImage::create([
-                    'url_path' => time() . $unique,
+                    'url_path' => $unique,
                     'offer_id' => $offer->id,
                 ]);
             }
