@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use JD\Cloudder\Facades\Cloudder;
 
 class ImageController extends Controller
 {
@@ -83,9 +84,9 @@ class ImageController extends Controller
         //
 
         $image = Image::findOrFail($request['id']);
-
-        unlink(public_path() . '/thumbnail/'.$image->url_path);
-        unlink(public_path() . '/images/'.$image->url_path);
+            
+        Cloudder::delete('/normal/'.$image->url_path);
+        Cloudder::delete('/thumbnail/'.$image->url_path);
 
         $image->delete();
 

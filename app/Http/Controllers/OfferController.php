@@ -316,8 +316,10 @@ class OfferController extends Controller
         if (count($offer->images) > 0) {
             foreach ($offer->images as $img) {
                 $i = myImage::find($img['id']);
-                unlink(public_path() . '/thumbnail/' . $i->url_path);
-                unlink(public_path() . '/images/' . $i->url_path);
+    
+                Cloudder::delete('/normal/'.$i->url_path);
+                Cloudder::delete('/thumbnail/'.$i->url_path);
+
                 $i->delete();
             }
         }
