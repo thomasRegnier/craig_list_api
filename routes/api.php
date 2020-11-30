@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::post('/remove-hidens' ,[HidenController::class, 'destroy']);
     Route::get('/favoris', [FavoriteController::class, 'index']);
 
+    Route::post('/profil/{id}/update', [UserController::class,'update']);
+
  //   Route::get('/offers/{city}', [OfferController::class, 'index']);
 
 });

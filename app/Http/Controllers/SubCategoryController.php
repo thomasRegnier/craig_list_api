@@ -66,6 +66,7 @@ class SubCategoryController extends Controller
 
         $offer = Offer::where('city_id', $city->id)
         ->where('subcategory_id', $sub->id)
+        ->where('category_id', $category->id)
         ->with("category")
         ->with('subCategory')
         ->with('images')

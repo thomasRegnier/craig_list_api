@@ -187,8 +187,14 @@ class OfferController extends Controller
             ->with('images')
             ->with('user')
             ->get();
-        return response()
+        if(count($offer) > 0)    {
+            return response()
             ->json(['offer' => $offer]);
+        }else{
+            return response()
+            ->json(['error' => "error"], 404);
+        }
+
     }
 
     /**

@@ -37,7 +37,7 @@ class UserController extends Controller
         if ($validation->fails()) {
             $message = $validation->messages()->toArray();
             return response()
-                ->json(['error' => $message ], 422 );
+                ->json(['error' => $message], 422);
         }
 
         $user =  User::create([
@@ -67,19 +67,20 @@ class UserController extends Controller
             $hidens = User::where('id', Auth::user()->id)->with('hidens')->get();
 
 
-            return response()->json(['message' => 'Login successful',
+            return response()->json([
+                'message' => 'Login successful',
                 'user' => Auth::user(),
-                'token'=> $token->plainTextToken,
+                'token' => $token->plainTextToken,
                 'favoris' => $favorites[0]->favorites,
                 'hidens' => $hidens[0]->hidens
             ], 200);
-        } else{
+        } else {
             return response()
                 ->json(['message' => 'Bad credentials'], 404);
         }
 
-//        $token = $user->createToken('token-name');
-//        return $token->plainTextToken;
+        //        $token = $user->createToken('token-name');
+        //        return $token->plainTextToken;
     }
 
     /**
@@ -125,6 +126,34 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validation = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $request->id],
+            'city_id' => ['required']
+        ]);
+
+        if ($validation->fails()) {
+            $message = $validation->messages()->toArray();
+            return response()
+                ->json(['error' => $message], 422);
+        }
+
+        $user = User::findOrFail($request->id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'city_id' => $request->city_id,
+        ]);
+
+        if ($request->password) {
+            $user->update(['password' => bcrypt($request->password)]);
+        }
+
+        return response()
+                ->json([
+                    'user' => $user
+                ]);
     }
 
     /**
@@ -139,7 +168,8 @@ class UserController extends Controller
     }
 
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'message' => 'Successfully logged out'
