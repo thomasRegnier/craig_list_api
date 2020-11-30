@@ -33,7 +33,7 @@ class Offer extends Model
     }
 
     public function subCategory(){
-        return $this->belongsTo(subCategory::class, 'subcategory_id');
+        return $this->belongsTo(SubCategory::class, 'subcategory_id');
     }
 
     public function images(){
