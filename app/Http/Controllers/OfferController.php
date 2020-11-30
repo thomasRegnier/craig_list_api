@@ -143,22 +143,31 @@ class OfferController extends Controller
         if ($request->file('images')) {
             foreach ($request->file('images') as $file) {
 
-                $originalImage = $file;
+/*                 $originalImage = $file;
                 $thumbnailImage = Image::make($originalImage);
                 $thumbnailPath = public_path() . '/thumbnail/';
                 $originalPath = public_path() . '/images/';
                 $thumbnailImage->save($originalPath . time() . $originalImage->getClientOriginalName());
-                // $thumbnailImage->resize(150,150);
                 $thumbnailImage->resize(300, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                $thumbnailImage->save($thumbnailPath . time() . $originalImage->getClientOriginalName());
+                $thumbnailImage->save($thumbnailPath . time() . $originalImage->getClientOriginalName()); */
 
-                //    Cloudder::upload($thumbnailImage);
-                //    $cloundary_upload = Cloudder::getResult();
+                $unique = uniqid();
+                
+                   Cloudder::upload($file, "thumbnail/".$unique,
+                   [
+                   'resource_type' => 'image',
+                   'transformation' => array(
+                     array('width' => 300, 'height' => 480, 'crop' => 'limit'),
+                   )
+                   ]);
+                    $cloundary_upload = Cloudder::getResult();
+
+                    Cloudder::upload($file, "normal/".$unique);
 
                 $newImage = myImage::create([
-                    'url_path' => time() . $originalImage->getClientOriginalName(),
+                    'url_path' => $unique,
                     'offer_id' => $offer->id,
                 ]);
             }
