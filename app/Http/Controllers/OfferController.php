@@ -32,28 +32,28 @@ class OfferController extends Controller
 
             $arrayHiden = [];
 
-            foreach ($auth->hidens as $hiden) {
+            foreach($auth->hidens as $hiden){
                 array_push($arrayHiden, $hiden['offer_id']);
             }
 
             $offers = Offer::where('city_id', $city->id)
-                ->whereNotIn('id', $arrayHiden)
-                ->with('user')
-                ->with('city')
-                ->with('subCategory')
-                ->with('category')
-                ->with('images')
-                ->orderBy('updated_at', 'desc')
-                ->paginate(5);
-        } else {
+            ->whereNotIn('id', $arrayHiden)
+            ->with('user')
+            ->with('city')
+            ->with('subCategory')
+            ->with('category')
+            ->with('images')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(5);
+        }else{
             $offers = Offer::where('city_id', $city->id)
-                ->with('user')
-                ->with('city')
-                ->with('subCategory')
-                ->with('category')
-                ->with('images')
-                ->orderBy('updated_at', 'desc')
-                ->paginate(5);
+            ->with('user')
+            ->with('city')
+            ->with('subCategory')
+            ->with('category')
+            ->with('images')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(5);
         }
 
 
@@ -99,7 +99,7 @@ class OfferController extends Controller
         //
         /*         return response()
                 ->json(['error' => $request->all()]); */
-        if ($request->file('images')) {
+        if($request->file('images')){
             if (count($request->file('images')) > 24) {
                 return response()
                     ->json(['error' => "too much images"], 400);
@@ -154,10 +154,8 @@ class OfferController extends Controller
                 });
                 $thumbnailImage->save($thumbnailPath . time() . $originalImage->getClientOriginalName());
 
-                Cloudder::upload($thumbnailImage->resize(300, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                }));
-                $cloundary_upload = Cloudder::getResult();
+                //    Cloudder::upload($thumbnailImage);
+                //    $cloundary_upload = Cloudder::getResult();
 
                 $newImage = myImage::create([
                     'url_path' => time() . $originalImage->getClientOriginalName(),
@@ -191,13 +189,14 @@ class OfferController extends Controller
             ->with('images')
             ->with('user')
             ->get();
-        if (count($offer) > 0) {
+        if(count($offer) > 0)    {
             return response()
-                ->json(['offer' => $offer]);
-        } else {
+            ->json(['offer' => $offer]);
+        }else{
             return response()
-                ->json(['error' => "error"], 404);
+            ->json(['error' => "error"], 404);
         }
+
     }
 
     /**
@@ -307,17 +306,18 @@ class OfferController extends Controller
 
     public function search(Offer $offer, Request $request)
     {
-
-
-
-        $annonces =  Offer::where('title', 'LIKE', '%' . $request['research'] . '%')
-            ->with('images')
-            ->with('city')
-            ->with('subCategory')
-            ->with('category')
-            ->get();
+        
+       
+       
+        $annonces =  Offer::where('title', 'LIKE', '%'. $request['research'] .'%')
+                    ->with('images')
+                    ->with('city')
+                    ->with('subCategory')
+                    ->with('category')
+                    ->get();
 
         return response()
-            ->json(['annonces' => $annonces]);
+                    ->json(['annonces' => $annonces]);     
+
     }
 }
