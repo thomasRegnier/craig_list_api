@@ -145,8 +145,8 @@ class OfferController extends Controller
 
                 $originalImage = $file;
                 $thumbnailImage = Image::make($originalImage);
-                $thumbnailPath = storage_path() . '/thumbnail/';
-                $originalPath = storage_path() . '/images/';
+                $thumbnailPath = public_path() . '/thumbnail/';
+                $originalPath = public_path() . '/images/';
                 $thumbnailImage->save($originalPath . time() . $originalImage->getClientOriginalName());
                 // $thumbnailImage->resize(150,150);
                 $thumbnailImage->resize(300, null, function ($constraint) {
