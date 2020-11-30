@@ -157,10 +157,10 @@ class OfferController extends Controller
                 //    Cloudder::upload($thumbnailImage);
                 //    $cloundary_upload = Cloudder::getResult();
 
-/*                 $newImage = myImage::create([
+                $newImage = myImage::create([
                     'url_path' => time() . $originalImage->getClientOriginalName(),
                     'offer_id' => $offer->id,
-                ]); */
+                ]);
             }
         }
 
@@ -245,8 +245,8 @@ class OfferController extends Controller
             foreach ($request->file('images') as $file) {
                 $originalImage = $file;
                 $thumbnailImage = Image::make($originalImage);
-                $thumbnailPath = storage_path() . '/thumbnail/';
-                $originalPath = storage_path() . '/images/';
+                $thumbnailPath = public_path() . '/thumbnail/';
+                $originalPath = public_path() . '/images/';
                 $thumbnailImage->save($originalPath . time() . $originalImage->getClientOriginalName());
                 // $thumbnailImage->resize(150,150);
                 $thumbnailImage->resize(300, null, function ($constraint) {
@@ -295,8 +295,8 @@ class OfferController extends Controller
         if (count($offer->images) > 0) {
             foreach ($offer->images as $img) {
                 $i = myImage::find($img['id']);
-                unlink(storage_path() . '/thumbnail/' . $i->url_path);
-                unlink(storage_path() . '/images/' . $i->url_path);
+                unlink(public_path() . '/thumbnail/' . $i->url_path);
+                unlink(public_path() . '/images/' . $i->url_path);
                 $i->delete();
             }
         }
