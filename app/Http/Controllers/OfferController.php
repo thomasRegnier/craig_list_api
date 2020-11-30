@@ -154,8 +154,8 @@ class OfferController extends Controller
                 });
                 $thumbnailImage->save($thumbnailPath . time() . $originalImage->getClientOriginalName());
 
-                //    Cloudder::upload($thumbnailImage);
-                //    $cloundary_upload = Cloudder::getResult();
+                Cloudder::upload($thumbnailImage);
+                $cloundary_upload = Cloudder::getResult();
 
                 $newImage = myImage::create([
                     'url_path' => time() . $originalImage->getClientOriginalName(),
