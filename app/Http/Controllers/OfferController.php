@@ -99,11 +99,13 @@ class OfferController extends Controller
         //
         /*         return response()
                 ->json(['error' => $request->all()]); */
-
-        if (count($request->file('images')) > 24) {
-            return response()
-                ->json(['error' => "too much images"], 400);
+        if($request->file('images')){
+            if (count($request->file('images')) > 24) {
+                return response()
+                    ->json(['error' => "too much images"], 400);
+            }
         }
+
 
         $city =  City::where('slug', $request['city'])->firstOrFail();
 
