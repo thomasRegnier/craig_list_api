@@ -21,11 +21,11 @@ class Offer extends Model
 
 
     public function city(){
-        return $this->belongsTo(city::class);
+        return $this->belongsTo(City::class);
     }
 
     public function user(){
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(User::class);
     }
 
     public function category(){

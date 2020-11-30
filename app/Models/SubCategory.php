@@ -14,6 +14,6 @@ class SubCategory extends Model
     }
 
     public function offer(){
-        return $this->hasMany(offer::class);
+        return $this->hasMany(Offer::class);
     }
 }
