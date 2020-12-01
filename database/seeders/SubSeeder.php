@@ -48,16 +48,6 @@ class SubSeeder extends Seeder
                 'slug' => Str::of('dépannage')->slug('-'),
             ],
             [
-                'category_id' => 3,
-                'name' => 'occasion',
-                'slug' => Str::of('occasion')->slug('-'),
-            ],
-            [
-                'category_id' => 3,
-                'name' => 'neuf',
-                'slug' => Str::of('développement')->slug('-'),
-            ],
-            [
                 'category_id' => 4,
                 'name' => 'neuf',
                 'slug' => Str::of('neuf')->slug('-'),
@@ -66,11 +56,6 @@ class SubSeeder extends Seeder
                 'category_id' => 4,
                 'name' => 'occasion',
                 'slug' => Str::of('occasion')->slug('-'),
-            ],
-            [
-                'category_id' => 4,
-                'name' => 'location',
-                'slug' => Str::of('location')->slug('-'),
             ],
             [
                 'category_id' => 5,
